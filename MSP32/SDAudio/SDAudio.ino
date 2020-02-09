@@ -2,23 +2,22 @@
 #include <SD.h>
 #include <SPI.h>
 
-const long defaultWavLength = 10000;
+const long defaultWavLength = 54498;
 unsigned char ANote[defaultWavLength];
-unsigned char BNote[defaultWavLength];
-unsigned char CNote[defaultWavLength];
-unsigned char DNote[defaultWavLength];
-unsigned char ENote[defaultWavLength];
-unsigned char FNote[defaultWavLength];
+//unsigned char BNote[defaultWavLength];
+//unsigned char CNote[defaultWavLength];
+//unsigned char DNote[defaultWavLength];
+//unsigned char ENote[defaultWavLength];
+//unsigned char FNote[defaultWavLength];
 unsigned char GNote[defaultWavLength];
 XT_DAC_Audio_Class DacAudio2(26,0);
 XT_DAC_Audio_Class DacAudio1(25,0);
 
-void InitToZero(unsigned char * list, long maximum){
-  long counter = 0;
-  while(counter < maximum){
-    list[counter] = 0x00;
-    counter++;
-  }
+void SetFileSize(unsigned char * list, long maximum){
+  list[28] = 226;
+  list[29] = 212;
+  list[30] = 0x00;
+  list[31] = 0x00;
 }
 
 void setup() {
@@ -38,7 +37,7 @@ void setup() {
   file = SD.open("/piano-a.wav");
   
   Serial.println("---Stage 2 A---");
-  InitToZero(ANote, defaultWavLength);
+  SetFileSize(ANote, defaultWavLength);
   
   Serial.println("---Stage 3 A---");
   counter = 0;
@@ -48,12 +47,12 @@ void setup() {
   }
   
   file.close();
-
+/*
   Serial.println("---Stage 1 B---");
   file = SD.open("/piano-b.wav");
   
   Serial.println("---Stage 2 B---");
-  InitToZero(BNote, defaultWavLength);
+  SetFileSize(BNote, defaultWavLength);
   
   Serial.println("---Stage 3 B---");
   counter = 0;
@@ -68,7 +67,7 @@ void setup() {
   file = SD.open("/piano-c.wav");
   
   Serial.println("---Stage 2 C---");
-  InitToZero(CNote, defaultWavLength);
+  SetFileSize(CNote, defaultWavLength);
   
   Serial.println("---Stage 3 C---");
   counter = 0;
@@ -83,7 +82,7 @@ void setup() {
   file = SD.open("/piano-d.wav");
   
   Serial.println("---Stage 2 D---");
-  InitToZero(DNote, defaultWavLength);
+  SetFileSize(DNote, defaultWavLength);
   
   Serial.println("---Stage 3 D---");
   counter = 0;
@@ -98,7 +97,7 @@ void setup() {
   file = SD.open("/piano-e.wav");
   
   Serial.println("---Stage 2 E---");
-  InitToZero(ENote, defaultWavLength);
+  SetFileSize(ENote, defaultWavLength);
   
   Serial.println("---Stage 3 E---");
   counter = 0;
@@ -113,7 +112,7 @@ void setup() {
   file = SD.open("/piano-f.wav");
   
   Serial.println("---Stage 2 F---");
-  InitToZero(FNote, defaultWavLength);
+  SetFileSize(FNote, defaultWavLength);
   
   Serial.println("---Stage 3 F---");
   counter = 0;
@@ -123,12 +122,12 @@ void setup() {
   }
   
   file.close();
-
+*/
   Serial.println("---Stage 1 G---");
   file = SD.open("/piano-g.wav");
   
   Serial.println("---Stage 2 G---");
-  InitToZero(GNote, defaultWavLength);
+  SetFileSize(GNote, defaultWavLength);
   
   Serial.println("---Stage 3 G---");
   counter = 0;
@@ -140,11 +139,11 @@ void setup() {
   file.close();
 
   XT_Wav_Class PianoA(ANote);
-  XT_Wav_Class PianoB(BNote);
+  /*XT_Wav_Class PianoB(BNote);
   XT_Wav_Class PianoC(CNote);
   XT_Wav_Class PianoD(DNote);
   XT_Wav_Class PianoE(ENote);
-  XT_Wav_Class PianoF(FNote);
+  XT_Wav_Class PianoF(FNote);*/
   XT_Wav_Class PianoG(GNote);
   int noteSelector = 0;
   while(true){
