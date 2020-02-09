@@ -3,7 +3,7 @@
 #include <SPI.h>
 
 const long defaultWavLength = 50000;
-unsigned char Scream[defaultWavLength];
+unsigned char ANote[defaultWavLength];
 XT_DAC_Audio_Class DacAudio2(26,0);
 XT_DAC_Audio_Class DacAudio1(25,0);
 
@@ -25,28 +25,28 @@ void setup() {
      Serial.println("Card Mount Failed");
      return;
   }
-  File file = SD.open("/scream.wav");
+  File file = SD.open("/piano-a.wav");
 
   Serial.println("---Stage 1---");
   
   Serial.println("---Stage 2---");
-  InitToZero(Scream, defaultWavLength);
+  InitToZero(ANote, defaultWavLength);
   
   Serial.println("---Stage 3---");
   long counter = 0;
   while(file.available() && (counter < defaultWavLength)){
-    Scream[counter] = (unsigned char)file.read();
+    ANote[counter] = (unsigned char)file.read();
     counter++;
   }
   
   file.close();
 
-  XT_Wav_Class R2D2(Scream);
+  XT_Wav_Class PianoA(ANote);
   while(true){
     DacAudio1.FillBuffer();
-    if(R2D2.Playing==false){
-      DacAudio1.Play(&R2D2);
-      Serial.println("*SCREAMING*");
+    if(PianoA.Playing==false){
+      DacAudio1.Play(&PianoA);
+      Serial.println("*note*");
     }
   }
 }
