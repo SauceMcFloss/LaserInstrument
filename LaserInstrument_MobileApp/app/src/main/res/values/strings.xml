@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LaserInstrument_MobileApp</string>
+    <string name="button_recordings">View Previous Recordings</string>
+    <string name="button_connect_pending">Searching for Bluetooth Device...</string>
+    <string name="button_connect_connected">View Instrument</string>
+    <string name="button_back">Go Back to Main Menu</string>
+</resources>
