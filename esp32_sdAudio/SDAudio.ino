@@ -100,7 +100,7 @@ void setup() {
     DacAudio1.FillBuffer();
   }
 
-  for(int i = 0; i < 3; i++){
+  for (int i = 0; i < 3; i++){
     if(PianoA4_Mid.Playing==false){
       DacAudio1.Play(&PianoA4_Mid);
       PianoA4_Mid.Looped=false;
@@ -111,20 +111,17 @@ void setup() {
     }
   }
 
-  while(true){
-    if(PianoA4_End.Playing==false){
-      DacAudio1.Play(&PianoA4_End);
-      PianoA4_End.Looped=false;
-      Serial.println("*end*");
-    }
-    while(PianoA4_End.Looped == false){
-      DacAudio1.FillBuffer();
-    }
+  if(PianoA4_End.Playing==false){
+    DacAudio1.Play(&PianoA4_End);
+    PianoA4_End.Looped=false;
+    Serial.println("*end*");
+  }
+  while(PianoA4_End.Looped == false){
+    DacAudio1.FillBuffer();
   }
   
   DacAudio1.StopAllSounds();
   Serial.println("Done.");
-  //}
 }
 
 void loop(){
