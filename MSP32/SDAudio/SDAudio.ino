@@ -81,8 +81,11 @@ void setup() {
   file.close();
 
   XT_Wav_Class PianoA4_Beg(A4Note_Beg);
+  PianoA4_Beg.Speed = .82;
   XT_Wav_Class PianoA4_Mid(A4Note_Mid);
+  PianoA4_Mid.Speed = .82;
   XT_Wav_Class PianoA4_End(A4Note_End);
+  PianoA4_End.Speed = .82;
 
   Serial.println(PianoA4_Beg.DataSize);
   Serial.println(PianoA4_Mid.DataSize);
