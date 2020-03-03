@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">LaserInstrument_MobileApp</string>
-    <string name="button_recordings">View Previous Recordings</string>
-    <string name="button_connect_pending">Searching for Bluetooth Device...</string>
-    <string name="button_connect_connected">View Instrument</string>
-    <string name="button_back">Go Back to Main Menu</string>
+    <string name="button_ConnectRecord_string">Connect to Record</string>
+    <string name="button_Browse_string">Playback</string>
+    <string name="button_Connect_string">Connect</string>
+    <string name="button_Record_string">Record</string>
+    <string name="button_BeginRecording_string">Begin Recording...</string>
+    <string name="button_Select_string">Select/Browse Past Recordings</string>
+    <string name="button_PlaySelected_string">Play/Edit Selected</string>
+    <string name="button_Play_string">Play</string>
+    <string name="button_Modify_string">Modify</string>
+    <string name="button_Save_string">Save to File Type Within Phone</string>
+    <string name="button_Back_string">Go Back</string>
 </resources>

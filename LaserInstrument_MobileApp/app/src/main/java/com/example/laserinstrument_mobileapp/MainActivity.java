@@ -9,36 +9,37 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button OfflineButton, OnlineButton;
+    Button ConnectRecordButton, BrowseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        OfflineButton = (Button) findViewById(R.id.button_mainOffline);
-        OnlineButton = (Button) findViewById(R.id.button_mainOnline);
-        OfflineButton.setOnClickListener(new View.OnClickListener() {
+        ConnectRecordButton = (Button) findViewById(R.id.button_ConnectRecord);
+        BrowseButton = (Button) findViewById(R.id.button_Browse);
+
+        ConnectRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openOfflineActivity();
+                openConnectRecordActivity();
             }
         });
-        OnlineButton.setOnClickListener(new View.OnClickListener() {
+        BrowseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openOnlineActivity();
+                openBrowseActivity();
             }
         });
     }
 
-    public void openOfflineActivity(){
-        Intent intent = new Intent(this, OfflineActivity.class);
+    public void openConnectRecordActivity(){
+        Intent intent = new Intent(this, ConnectRecordActivity.class);
         startActivity(intent);
     }
 
-    public void openOnlineActivity(){
-        Intent intent = new Intent(this, OnlineActivity.class);
+    public void openBrowseActivity(){
+        Intent intent = new Intent(this, BrowseActivity.class);
         startActivity(intent);
     }
 }

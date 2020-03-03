@@ -19,8 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".OfflineActivity"></activity>
-        <activity android:name=".OnlineActivity"></activity>
+        <activity android:name=".BrowseActivity"></activity>
+        <activity android:name=".ConnectRecordActivity"></activity>
+        <activity android:name=".EditActivity"></activity>
+        <activity android:name=".RecordActivity"></activity>
     </application>
 
 </manifest>
