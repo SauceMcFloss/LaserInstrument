@@ -47,7 +47,7 @@ void setup() {
 
   file = SD.open("/flute_C4_1_mezzo-forte_normal_mid.wav");
   counter = 0;
-  while(file.available() && (counter < 17909)){
+  while(file.available() && (counter < 35244)){
     C4Note_Mid[counter] = (unsigned char)file.read();
     counter++;
   }
@@ -57,7 +57,7 @@ void setup() {
 
   file = SD.open("/flute_D4_1_mezzo-forte_normal_mid.wav");
   counter = 0;
-  while(file.available() && (counter < 17909)){
+  while(file.available() && (counter < 35722)){
     D4Note_Mid[counter] = (unsigned char)file.read();
     counter++;
   }
@@ -67,7 +67,7 @@ void setup() {
 
   file = SD.open("/flute_E4_1_mezzo-forte_normal_mid.wav");
   counter = 0;
-  while(file.available() && (counter < 17909)){
+  while(file.available() && (counter < 16984)){
     E4Note_Mid[counter] = (unsigned char)file.read();
     counter++;
   }
@@ -77,7 +77,7 @@ void setup() {
 
   file = SD.open("/flute_F4_1_mezzo-forte_normal_mid.wav");
   counter = 0;
-  while(file.available() && (counter < 17909)){
+  while(file.available() && (counter < 11074)){
     F4Note_Mid[counter] = (unsigned char)file.read();
     counter++;
   }
@@ -87,7 +87,7 @@ void setup() {
 
   file = SD.open("/flute_G4_1_mezzo-forte_normal_mid.wav");
   counter = 0;
-  while(file.available() && (counter < 17909)){
+  while(file.available() && (counter < 32305)){
     G4Note_Mid[counter] = (unsigned char)file.read();
     counter++;
   }
@@ -107,7 +107,7 @@ void setup() {
 
   file = SD.open("/flute_B4_1_mezzo-forte_normal_mid.wav");
   counter = 0;
-  while(file.available() && (counter < 17909)){
+  while(file.available() && (counter < 27573)){
     B4Note_Mid[counter] = (unsigned char)file.read();
     counter++;
   }
@@ -117,7 +117,7 @@ void setup() {
 
   file = SD.open("/flute_C5_1_mezzo-forte_normal_mid.wav");
   counter = 0;
-  while(file.available() && (counter < 17909)){
+  while(file.available() && (counter < 26086)){
     C5Note_Mid[counter] = (unsigned char)file.read();
     counter++;
   }
