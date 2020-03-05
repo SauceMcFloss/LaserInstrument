@@ -95,10 +95,10 @@ void PrepareC4Note()
 void PlayC4Note()
 {
   Serial.println("Playing...");
-  XT_Wav_Class PianoC4_Mid(C4Note);
-  PianoC4_Mid.Speed = .82;
-  PianoC4_Mid.RepeatForever = true;
-  DacAudio.Play(&PianoC4_Mid);
+  XT_Wav_Class C4Note_Playable(C4Note);
+  C4Note_Playable.Speed = .82;
+  C4Note_Playable.RepeatForever = true;
+  DacAudio.Play(&C4Note_Playable);
 
   for (int i = 0; i < 50000; i++){
     DacAudio.FillBuffer();
