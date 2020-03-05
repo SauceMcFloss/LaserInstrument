@@ -94,15 +94,13 @@ void PrepareC4Note()
 
 void PlayC4Note()
 {
-  Serial.println("Playing...");
   XT_Wav_Class C4Note_Playable(C4Note);
   C4Note_Playable.Speed = .82;
   C4Note_Playable.RepeatForever = true;
   DacAudio.Play(&C4Note_Playable);
 
-  for (int i = 0; i < 50000; i++){
+  for (int i = 0; i < 20000; i++){ // This is where we put "while the user is pressing a key"
     DacAudio.FillBuffer();
-    Serial.println(i);
   }
 }
 
