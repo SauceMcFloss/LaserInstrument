@@ -4,17 +4,19 @@
 #include <SD.h>
 #include <SPI.h>
 
+int threshold = 150;
+
 int LED_BUILTIN = 2;
 int diode = 1; //GPIO pin 1
 
-int sensorClow = A0; // anolog pin 0
-int sensorD = A3; // anolog pin 3
-int sensorE = A6; // anolog pin 6
-int sensorF = A7; // anolog pin 7
-//int sensorG = A7; // anolog pin 7
-//int sensorA = A7; // anolog pin 7
-//int sensorB = A7; // anolog pin 7
-//int sensorChigh = A7; // anolog pin 7
+int sensorClow = A0; // SVP
+int sensorD = A3; // SVN
+int sensorE = A6; // IO 34
+int sensorF = A7; // IO 35
+int sensorG = A4; // IO 32
+int sensorA = A5; // IO 33
+int sensorB = A16; // IO 14
+int sensorChigh = A14; // IO 13
 
 int lcdColumns = 16;
 int lcdRows = 2;
@@ -50,10 +52,10 @@ void setup() {
   pinMode (sensorD, INPUT);
   pinMode (sensorE, INPUT);
   pinMode (sensorF, INPUT);
-  //pinMode (sensorG, INPUT);
-  //pinMode (sensorA, INPUT);
-  //pinMode (sensorB, INPUT);
-  //pinMode (sensorChigh, INPUT);
+  pinMode (sensorG, INPUT);
+  pinMode (sensorA, INPUT);
+  pinMode (sensorB, INPUT);
+  pinMode (sensorChigh, INPUT);
 
   // initialize LCD and backlight
   lcd.init();                     
@@ -106,87 +108,57 @@ void loop() {
   int senD = analogRead(sensorD);  // read the input pin
   int senE = analogRead(sensorE);  // read the input pin
   int senF = analogRead(sensorF);  // read the input pin
-  //int senG = analogRead(sensorG);  // read the input pin
-  //int senA = analogRead(sensorA);  // read the input pin
-  //int senB = analogRead(sensorB);  // read the input pin
-  //int senChigh = analogRead(sensorChigh);  // read the input pin
+  int senG = analogRead(sensorG);  // read the input pin
+  int senA = analogRead(sensorA);  // read the input pin
+  int senB = analogRead(sensorB);  // read the input pin
+  int senChigh = analogRead(sensorChigh);  // read the input pin
   
 
-  if(senClow > 150)
+  if(senClow > threshold)
   {
     Serial.print("Sensor Clow! ");
     Serial.println(senClow);
-    lcd.setCursor(2,1);
+    lcd.setCursor(0,1);
     lcd.write(1);
-    lcd.print(" e f g a b c");
-
+    lcd.print(" d e f g a b c");
     
     //XT_Wav_Class PianoCl(ClNote);
-    while(senClow > 150)
+    while(senClow > threshold)
     {
-      /*
-      DacAudio1.FillBuffer();
-      if(PianoCl.Playing==false)
-      {
-        DacAudio1.Play(&PianoCl);
-        Serial.println("*noteCl*");
-      }
-      */
-
       senClow = analogRead(sensorClow);  // read the input pin
       Serial.print("Sensor Clow! ");
       Serial.println(senClow);
     }
   }
 
-  else if(senD > 150)
+  else if(senD > threshold)
   {
     Serial.print("Sensor D! ");
     Serial.println(senD);
     lcd.setCursor(2,1);
     lcd.write(1);
     lcd.print(" e f g a b c");
-
     
     //XT_Wav_Class PianoD(DNote);
-    while(senD > 150)
+    while(senD > threshold)
     {
-      /*
-      DacAudio1.FillBuffer();
-      if(PianoD.Playing==false)
-      {
-        DacAudio1.Play(&PianoD);
-        Serial.println("*noteD*");
-      }
-      */
-
       senD = analogRead(sensorD);  // read the input pin
       Serial.print("Sensor D! ");
       Serial.println(senD);
     }
   }
 
-  else if(senE > 150)
+  else if(senE > threshold)
   {
     Serial.print("Sensor E! ");
     Serial.println(senE);
     lcd.setCursor(4,1);
     lcd.write(1);
     lcd.print(" f g a b c");
-
     
     //XT_Wav_Class PianoE(ENote);
-    while(senE > 150)
+    while(senE > threshold)
     {
-      /*
-      DacAudio1.FillBuffer();
-      if(PianoE.Playing==false)
-      {
-        DacAudio1.Play(&PianoE);
-        Serial.println("*noteE*");
-      }
-      */
-
       senE = analogRead(sensorE);  // read the input pin
       Serial.print("Sensor E! ");
       Serial.println(senE);
@@ -194,33 +166,90 @@ void loop() {
   }
 
 
-  else if(senF > 150) 
+  else if(senF > threshold) 
   {
     Serial.print("Sensor F! " );
     Serial.println(senF);
     lcd.setCursor(6,1);
     lcd.write(1);
     lcd.print(" g a b c");
-
     
     //XT_Wav_Class PianoF(FNote);
-    while(senF > 150)
+    while(senF > threshold)
     {
-      /*
-      DacAudio1.FillBuffer();
-      if(PianoF.Playing==false)
-      {
-        DacAudio1.Play(&PianoF);
-        Serial.println("*noteF*");
-      }
-      */
-
       senF = analogRead(sensorF);  // read the input pin
       Serial.print("Sensor F! " );
       Serial.println(senF);
     }
   }
 
+  else if(senG > threshold) 
+  {
+    Serial.print("Sensor G! " );
+    Serial.println(senG);
+    lcd.setCursor(8,1);
+    lcd.write(1);
+    lcd.print(" a b c");
+    
+    //XT_Wav_Class PianoF(FNote);
+    while(senG > threshold)
+    {
+      senG = analogRead(sensorG);  // read the input pin
+      Serial.print("Sensor G! " );
+      Serial.println(senG);
+    }
+  }
+
+  else if(senA > threshold) 
+  {
+    Serial.print("Sensor A! " );
+    Serial.println(senA);
+    lcd.setCursor(10,1);
+    lcd.write(1);
+    lcd.print(" b c");
+    
+    //XT_Wav_Class PianoF(FNote);
+    while(senA > threshold)
+    {
+      senA = analogRead(sensorA);  // read the input pin
+      Serial.print("Sensor A! " );
+      Serial.println(senA);
+    }
+  }
+
+  else if(senB > threshold) 
+  {
+    Serial.print("Sensor B! " );
+    Serial.println(senB);
+    lcd.setCursor(12,1);
+    lcd.write(1);
+    lcd.print(" c");
+
+    //XT_Wav_Class PianoF(FNote);
+    while(senB > threshold)
+    {
+      senB = analogRead(sensorB);  // read the input pin
+      Serial.print("Sensor B! " );
+      Serial.println(senB);
+    }
+  }
+
+  else if(senChigh > threshold) 
+  {
+    Serial.print("Sensor Chigh! " );
+    Serial.println(senChigh);
+    lcd.setCursor(14,1);
+    lcd.write(1);
+    lcd.print("");
+    
+    //XT_Wav_Class PianoF(FNote);
+    while(senChigh > threshold)
+    {
+      senChigh = analogRead(sensorChigh);  // read the input pin
+      Serial.print("Sensor Chigh! " );
+      Serial.println(senChigh);
+    }
+  }
 
   else
   {
