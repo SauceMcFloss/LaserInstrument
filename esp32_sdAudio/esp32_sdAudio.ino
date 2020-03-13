@@ -3,7 +3,6 @@
 #include <SD.h>
 #include <SPI.h>
 #include <stdlib.h>
-#include <string.h>
 
 // Global variables
 
