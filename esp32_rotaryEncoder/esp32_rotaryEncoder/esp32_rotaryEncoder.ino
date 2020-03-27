@@ -9,6 +9,9 @@ unsigned char encoder_B;
 unsigned char encoder_A_prev=0;
 
 void IRAM_ATTR rot_interrupt() {
+  detachInterrupt(digitalPinToInterrupt(pin_A));
+  detachInterrupt(digitalPinToInterrupt(pin_B));
+  
   encoder_A = digitalRead(pin_A);    // Read encoder pins
   encoder_B = digitalRead(pin_B);   
   if((!encoder_A) && (encoder_A_prev)){
@@ -16,15 +19,22 @@ void IRAM_ATTR rot_interrupt() {
     if(encoder_B) {
       // B is high so clockwise
       // increase the brightness, dont go over 255
-      Serial.println("Clockwise");        
+      Serial.println("Clockwise rotation.");        
     }   
     else {
       // B is low so counter-clockwise      
       // decrease the brightness, dont go below 0
-      Serial.println("Counter-Clockwise");          
+      Serial.println("Counter-Clockwise rotation.");          
     }   
   }   
   encoder_A_prev = encoder_A;     // Store value of A for next time  
+
+  attachInterrupt(pin_A, rot_interrupt, CHANGE);
+  attachInterrupt(pin_B, rot_interrupt, CHANGE);
+}
+
+void IRAM_ATTR but_interrupt() {
+  Serial.println("Button pressed.");  
 }
 
 void setup() {
@@ -36,9 +46,9 @@ void setup() {
 
   attachInterrupt(pin_A, rot_interrupt, CHANGE);
   attachInterrupt(pin_B, rot_interrupt, CHANGE);
+  attachInterrupt(pin_but, but_interrupt, FALLING);
 }
 
 void loop() {
-  Serial.println(digitalRead(pin_but));
-  delay(100);
+  
 }
