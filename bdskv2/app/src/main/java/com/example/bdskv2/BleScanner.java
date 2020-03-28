@@ -58,12 +58,12 @@ public class BleScanner {
             @Override
             public void run()
             {
-                if (scanning)
-                {
-                    Log.d(Constants.TAG, "Stopping scanning");
-                    scanner.stopScan(scan_callback);
-                    setScanning(false);
-                }
+            if (scanning)
+            {
+                Log.d(Constants.TAG, "Stopping scanning");
+                scanner.stopScan(scan_callback);
+                setScanning(false);
+            }
             }
         }, stop_after_ms);
 
@@ -116,6 +116,4 @@ public class BleScanner {
             scan_results_consumer.scanningStarted();
         }
     }
-
-
 }

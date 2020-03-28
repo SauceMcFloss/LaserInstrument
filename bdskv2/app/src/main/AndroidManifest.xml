@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,6 +28,9 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>
+        <service
+            android:name=".bluetooth.BleAdapterService"
+            android:enabled="true" />
     </application>
 
 </manifest>
