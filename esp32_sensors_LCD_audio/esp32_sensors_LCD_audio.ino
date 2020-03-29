@@ -54,97 +54,6 @@ unsigned char RotA_prev = 0;
 int InstrumentSelector = 0; // default = flute
 int InstrumentPlaying = 0; // default = flute
 
-void IRAM_ATTR rot_interrupt() {
-  detachInterrupt(digitalPinToInterrupt(RotA_pin));
-  detachInterrupt(digitalPinToInterrupt(RotB_pin));
-  
-  RotA = digitalRead(RotA_pin);    // Read encoder pins
-  RotB = digitalRead(RotB_pin);   
-  if((!RotA) && (RotA_prev)){
-    // A has gone from high to low 
-    if(RotB) {
-      // B is high so clockwise
-      InstrumentSelector = (InstrumentSelector + 1) % 5;
-    }   
-    else {
-      // B is low so counter-clockwise      
-      InstrumentSelector = (InstrumentSelector - 1) % 5;
-    }
-
-    lcd.setCursor(0, 0);
-    if(InstrumentSelector == 0){
-      lcd.print("Flute          ");
-      Serial.print("Flute");
-    }
-    else if(InstrumentSelector == 1){
-      lcd.print("Percussion     ");
-      Serial.print("Percussion");
-    }
-    else if(InstrumentSelector == 2){
-      lcd.print("Piano          ");
-      Serial.print("Piano");
-    }
-    else if(InstrumentSelector == 3){
-      lcd.print("Trumpet        ");
-      Serial.print("Trumpet");
-    }
-    else if(InstrumentSelector == 4){
-      lcd.print("Violin         ");
-      Serial.print("Violin");
-    }
-
-    if(InstrumentSelector == InstrumentPlaying){
-      lcd.print(":");
-      Serial.print(":");
-    }
-    else{
-      lcd.print("?");
-      Serial.print("?");
-    }
-  }   
-  RotA_prev = RotA;     // Store value of A for next time  
-
-  delay(100);
-
-  attachInterrupt(RotA_pin, rot_interrupt, CHANGE);
-  attachInterrupt(RotB_pin, rot_interrupt, CHANGE);
-}
-
-void IRAM_ATTR but_interrupt() {
-  if(InstrumentSelector != InstrumentPlaying){
-    detachInterrupt(digitalPinToInterrupt(RotA_pin));
-    detachInterrupt(digitalPinToInterrupt(RotB_pin));
-    detachInterrupt(digitalPinToInterrupt(RotBut_pin));
-
-    FreeAllNotes();
-    InstrumentPlaying = InstrumentSelector;
-
-    lcd.setCursor(0, 0);
-    lcd.print("Preparing...   ");
-    Serial.print("Preparing...");
-    
-    if(InstrumentSelector == 0){
-      PrepareAllNotes_Flute;
-    }
-    else if(InstrumentSelector == 1){
-      PrepareAllNotes_Percussion;
-    }
-    else if(InstrumentSelector == 2){
-      PrepareAllNotes_Piano;
-    }
-    else if(InstrumentSelector == 3){
-      PrepareAllNotes_Trumpet;
-    }
-    else if(InstrumentSelector == 4){
-      PrepareAllNotes_Violin;
-    }
-
-    attachInterrupt(RotA_pin, rot_interrupt, CHANGE);
-    attachInterrupt(RotB_pin, rot_interrupt, CHANGE);
-    attachInterrupt(RotBut_pin, but_interrupt, FALLING);
-  }
-}
-
 void setup() {
   Serial.begin(9600);      //  setup serial
 
@@ -179,9 +88,6 @@ void setup() {
   pinMode(RotA_pin, INPUT_PULLUP);
   pinMode(RotB_pin, INPUT_PULLUP);
   pinMode(RotBut_pin, INPUT_PULLUP);
-  attachInterrupt(RotA_pin, rot_interrupt, CHANGE);
-  attachInterrupt(RotB_pin, rot_interrupt, CHANGE);
-  attachInterrupt(RotBut_pin, but_interrupt, FALLING);
 
   // setup SD
   Serial.println("Mounting card...");
@@ -313,6 +219,119 @@ void loop()
 
   //lcd.print("                        ");
   //lcd.setCursor(0, 1);
+
+  // Rotary Encoder Check
+  // rotation
+  RotA = digitalRead(RotA_pin);    // Read encoder pins
+  RotB = digitalRead(RotB_pin);   
+  
+  if((!RotA) && (RotA_prev)){
+    // A has gone from high to low 
+    if(RotB) {
+      // B is high so clockwise
+      InstrumentSelector = (InstrumentSelector + 1) % 5;
+    }   
+    else {
+      // B is low so counter-clockwise      
+      InstrumentSelector = (InstrumentSelector - 1) % 5;
+    }
+
+    delay(100);
+  }   
+  RotA_prev = RotA;     // Store value of A for next time
+
+  lcd.setCursor(0, 0);
+  if(InstrumentSelector == 0){
+    lcd.print("Flute");
+    Serial.print("Flute");
+    if(InstrumentSelector == InstrumentPlaying){
+      lcd.print(":");
+      Serial.print(":");
+    }
+    else{
+      lcd.print("?");
+      Serial.print("?");
+    }
+    lcd.print("         ");
+  }
+  else if(InstrumentSelector == 1){
+    lcd.print("Percussion");
+    Serial.print("Percussion");
+    if(InstrumentSelector == InstrumentPlaying){
+      lcd.print(":");
+      Serial.print(":");
+    }
+    else{
+      lcd.print("?");
+      Serial.print("?");
+    }
+    lcd.print("    ");
+  }
+  else if(InstrumentSelector == 2){
+    lcd.print("Piano");
+    Serial.print("Piano");
+    if(InstrumentSelector == InstrumentPlaying){
+      lcd.print(":");
+      Serial.print(":");
+    }
+    else{
+      lcd.print("?");
+      Serial.print("?");
+    }
+    lcd.print("         ");
+  }
+  else if(InstrumentSelector == 3){
+    lcd.print("Trumpet");
+    Serial.print("Trumpet");
+    if(InstrumentSelector == InstrumentPlaying){
+      lcd.print(":");
+      Serial.print(":");
+    }
+    else{
+      lcd.print("?");
+      Serial.print("?");
+    }
+    lcd.print("       ");
+  }
+  else if(InstrumentSelector == 4){
+    lcd.print("Violin");
+    Serial.print("Violin");
+    if(InstrumentSelector == InstrumentPlaying){
+      lcd.print(":");
+      Serial.print(":");
+    }
+    else{
+      lcd.print("?");
+      Serial.print("?");
+    }
+    lcd.print("        ");
+  }
+
+  // button
+  if(!digitalRead(RotBut_pin)){
+    FreeAllNotes();
+    InstrumentPlaying = InstrumentSelector;
+
+    lcd.setCursor(0, 0);
+    lcd.print("Preparing...   ");
+    Serial.print("Preparing...");
+    
+    if(InstrumentSelector == 0){
+      PrepareAllNotes_Flute;
+    }
+    else if(InstrumentSelector == 1){
+      PrepareAllNotes_Percussion;
+    }
+    else if(InstrumentSelector == 2){
+      PrepareAllNotes_Piano;
+    }
+    else if(InstrumentSelector == 3){
+      PrepareAllNotes_Trumpet;
+    }
+    else if(InstrumentSelector == 4){
+      PrepareAllNotes_Violin;
+    }
+  }
 }
 
 // Other functions
