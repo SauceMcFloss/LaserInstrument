@@ -51,8 +51,8 @@ int RotBut_pin = 27;
 unsigned char RotA;
 unsigned char RotB;
 unsigned char RotA_prev = 0;
-int InstrumentSelector = 0; // default = flute
-int InstrumentPlaying = 0; // default = flute
+int InstrumentSelector = 2; // default = piano
+int InstrumentPlaying = 2; // default = piano
 
 void setup() {
   Serial.begin(9600);      //  setup serial
@@ -99,7 +99,7 @@ void setup() {
   Serial.println("Card mount succeeded.");
 
   // prepare for playing
-  PrepareAllNotes_Flute(); // flute is default at startup
+  PrepareAllNotes_Piano(); // piano is default at startup
 }
 
 
@@ -108,124 +108,13 @@ void loop()
   //digitalWrite(LED_BUILTIN, HIGH);
   digitalWrite(diode, HIGH);
 
-  if(analogRead(sensorClow) < threshold)
-  {
-    // For Debugging
-    Serial.print("Sensor Clow! ");
-    lcd.setCursor(0,1);
-    lcd.write(1);
-    lcd.print(" d e f g a b c");
-    //
-    
-    PlayNote(1, sensorClow); // PlayNote (Note, Sensor) - Note = CLow, CLowSensor = A0
-  }
-
-  if(analogRead(sensorD) < threshold)
-  {
-    // For Debugging
-    Serial.print("Sensor D! ");
-    lcd.setCursor(0,1);
-    lcd.print("c ");
-    lcd.write(1);
-    lcd.print(" e f g a b c");
-    //
-    
-    PlayNote(2, sensorD); // PlayNote (Note, Sensor) - Note = D, DSensor = A3
-  }
-
-  if(analogRead(sensorE) < threshold)
-  {
-    // For Debugging
-    Serial.print("Sensor E! ");
-    lcd.setCursor(0,1);
-    lcd.print("c d ");
-    lcd.write(1);
-    lcd.print(" f g a b c");
-    //
-    
-    PlayNote(3, sensorE); // PlayNote (Note, Sensor) - Note = E, ESensor = A6
-  }
-
-  if(analogRead(sensorF) < threshold)
-  {
-    // For Debugging
-    Serial.print("Sensor F! ");
-    lcd.setCursor(0,1);
-    lcd.print("c d e ");
-    lcd.write(1);
-    lcd.print(" g a b c");
-    //
-    
-    PlayNote(4, sensorF); // PlayNote (Note, Sensor) - Note = F, FSensor = A7
-  }
-
-  if(analogRead(sensorG) < threshold)
-  {
-    // For Debugging
-    Serial.print("Sensor G! ");
-    lcd.setCursor(0,1);
-    lcd.print("c d e f ");
-    lcd.write(1);
-    lcd.print(" a b c");
-    //
-    
-    PlayNote(5, sensorG); // PlayNote (Note, Sensor) - Note = G, GSensor = A4
-  }
-
-  if(analogRead(sensorA) < threshold)
-  {
-    // For Debugging
-    Serial.print("Sensor A! ");
-    lcd.setCursor(0,1);
-    lcd.print("c d e f g ");
-    lcd.write(1);
-    lcd.print(" b c");
-    //
-    
-    PlayNote(6, sensorA); // PlayNote (Note, Sensor) - Note = A, ASensor = A5
-  }
-
-  if(analogRead(sensorB) < threshold)
-  {
-    // For Debugging
-    Serial.print("Sensor B! ");
-    lcd.setCursor(0,1);
-    lcd.print("c d e f g a ");
-    lcd.write(1);
-    lcd.print(" c");
-    //
-    
-    PlayNote(7, sensorB); // PlayNote (Note, Sensor) - Note = B, BSensor = A16
-  }
-
-  if(analogRead(sensorChigh) < threshold)
-  {
-    // For Debugging
-    Serial.print("Sensor Chigh! ");
-    lcd.setCursor(0,1);
-    lcd.print("c d e f g a b ");
-    lcd.write(1);
-    lcd.print("");
-    //
-    
-    PlayNote(8, sensorChigh); // PlayNote (Note, Sensor) - Note = CHigh, CHighSensor = A14
-  }
-
-  // Default actions...
-
-  //Serial.println("Searching...");
-  lcd.setCursor(0,1);
-  lcd.print("c d e f g a b c");
-
-  //lcd.print("                        ");
-  //lcd.setCursor(0, 1);
-
   // Rotary Encoder Check
   // rotation
   RotA = digitalRead(RotA_pin);    // Read encoder pins
   RotB = digitalRead(RotB_pin);   
   
-  if((!RotA) && (RotA_prev)){
+  if((!RotA) && (RotA_prev))
+  {
     // A has gone from high to low 
     if(RotB) {
       // B is high so clockwise
@@ -309,28 +198,145 @@ void loop()
 
   // button
   if(!digitalRead(RotBut_pin)){
-    FreeAllNotes();
-    InstrumentPlaying = InstrumentSelector;
-
-    lcd.setCursor(0, 0);
-    lcd.print("Preparing...   ");
-    Serial.print("Preparing...");
+    if(InstrumentPlaying != InstrumentSelector)
+    {
+      InstrumentPlaying = InstrumentSelector;
+  
+      lcd.setCursor(0, 0);
+      lcd.print("Preparing...   ");
+      Serial.print("Preparing...");
     
-    if(InstrumentSelector == 0){
-      PrepareAllNotes_Flute;
+      if(InstrumentSelector == 0){
+        PrepareAllNotes_Flute();
+      }
+      else if(InstrumentSelector == 1){
+        PrepareAllNotes_Percussion();
+      }
+      else if(InstrumentSelector == 2){
+        PrepareAllNotes_Piano();
+      }
+      else if(InstrumentSelector == 3){
+        PrepareAllNotes_Trumpet();
+      }
+      else if(InstrumentSelector == 4){
+        PrepareAllNotes_Violin();
+      }
     }
-    else if(InstrumentSelector == 1){
-      PrepareAllNotes_Percussion;
+  }
+  else
+  {
+
+    if(analogRead(sensorClow) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor Clow! ");
+      lcd.setCursor(0,1);
+      lcd.write(1);
+      lcd.print(" d e f g a b c");
+      //
+      
+      PlayNote(1, sensorClow); // PlayNote (Note, Sensor) - Note = CLow, CLowSensor = A0
     }
-    else if(InstrumentSelector == 2){
-      PrepareAllNotes_Piano;
+  
+    if(analogRead(sensorD) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor D! ");
+      lcd.setCursor(0,1);
+      lcd.print("c ");
+      lcd.write(1);
+      lcd.print(" e f g a b c");
+      //
+      
+      PlayNote(2, sensorD); // PlayNote (Note, Sensor) - Note = D, DSensor = A3
     }
-    else if(InstrumentSelector == 3){
-      PrepareAllNotes_Trumpet;
+  
+    if(analogRead(sensorE) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor E! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d ");
+      lcd.write(1);
+      lcd.print(" f g a b c");
+      //
+      
+      PlayNote(3, sensorE); // PlayNote (Note, Sensor) - Note = E, ESensor = A6
     }
-    else if(InstrumentSelector == 4){
-      PrepareAllNotes_Violin;
+  
+    if(analogRead(sensorF) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor F! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d e ");
+      lcd.write(1);
+      lcd.print(" g a b c");
+      //
+      
+      PlayNote(4, sensorF); // PlayNote (Note, Sensor) - Note = F, FSensor = A7
     }
+  
+    if(analogRead(sensorG) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor G! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d e f ");
+      lcd.write(1);
+      lcd.print(" a b c");
+      //
+      
+      PlayNote(5, sensorG); // PlayNote (Note, Sensor) - Note = G, GSensor = A4
+    }
+  
+    if(analogRead(sensorA) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor A! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d e f g ");
+      lcd.write(1);
+      lcd.print(" b c");
+      //
+      
+      PlayNote(6, sensorA); // PlayNote (Note, Sensor) - Note = A, ASensor = A5
+    }
+  
+    if(analogRead(sensorB) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor B! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d e f g a ");
+      lcd.write(1);
+      lcd.print(" c");
+      //
+      
+      PlayNote(7, sensorB); // PlayNote (Note, Sensor) - Note = B, BSensor = A16
+    }
+  
+    if(analogRead(sensorChigh) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor Chigh! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d e f g a b ");
+      lcd.write(1);
+      lcd.print("");
+      //
+      
+      PlayNote(8, sensorChigh); // PlayNote (Note, Sensor) - Note = CHigh, CHighSensor = A14
+    }
+  
+    // Default actions...
+  
+    //Serial.println("Searching...");
+    lcd.setCursor(0,1);
+    lcd.print("c d e f g a b c");
+  
+    //lcd.print("                        ");
+    //lcd.setCursor(0, 1);
   }
 }
 
@@ -372,10 +378,10 @@ void PlayNote(int noteSelector, int sensor)
     
     XT_Wav_Class C4Note_Playable(C4Note);
     C4Note_Playable.Speed = 1.0;
-    //if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
-    //{
+    if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
+    {
       C4Note_Playable.RepeatForever = true;
-    //}
+    }
     DacAudio.Play(&C4Note_Playable);
   }
   else if(noteSelector == 2)
@@ -386,10 +392,10 @@ void PlayNote(int noteSelector, int sensor)
     
     XT_Wav_Class D4Note_Playable(D4Note);
     D4Note_Playable.Speed = 1.0;
-    //if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
-    //{
+    if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
+    {
       D4Note_Playable.RepeatForever = true;
-    //}
+    }
     DacAudio.Play(&D4Note_Playable);
   }
   else if(noteSelector == 3)
@@ -400,10 +406,10 @@ void PlayNote(int noteSelector, int sensor)
     
     XT_Wav_Class E4Note_Playable(E4Note);
     E4Note_Playable.Speed = 1.0;
-    //if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
-    //{
+    if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
+    {
       E4Note_Playable.RepeatForever = true;
-    //}
+    }
     DacAudio.Play(&E4Note_Playable);
   }
   else if(noteSelector == 4)
@@ -414,10 +420,10 @@ void PlayNote(int noteSelector, int sensor)
     
     XT_Wav_Class F4Note_Playable(F4Note);
     F4Note_Playable.Speed = 1.0;
-    //if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
-    //{
+    if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
+    {
       F4Note_Playable.RepeatForever = true;
-    //}
+    }
     DacAudio.Play(&F4Note_Playable);
   }
   else if(noteSelector == 5)
@@ -428,10 +434,10 @@ void PlayNote(int noteSelector, int sensor)
     
     XT_Wav_Class G4Note_Playable(G4Note);
     G4Note_Playable.Speed = 1.0;
-    //if(InstrumentPlaying != 2) // don't repeat if piano, but fine if percussion (drumroll key)
-    //{
+    if(InstrumentPlaying != 2) // don't repeat if piano, but fine if percussion (drumroll key)
+    {
       G4Note_Playable.RepeatForever = true;
-    //}
+    }
     DacAudio.Play(&G4Note_Playable);
   }
   else if(noteSelector == 6)
@@ -442,10 +448,10 @@ void PlayNote(int noteSelector, int sensor)
     
     XT_Wav_Class A4Note_Playable(A4Note);
     A4Note_Playable.Speed = 1.0;
-    //if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
-    //{
+    if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
+    {
       A4Note_Playable.RepeatForever = true;
-    //}
+    }
     DacAudio.Play(&A4Note_Playable);
   }
   else if(noteSelector == 7)
@@ -456,10 +462,10 @@ void PlayNote(int noteSelector, int sensor)
     
     XT_Wav_Class B4Note_Playable(B4Note);
     B4Note_Playable.Speed = 1.0;
-    //if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
-    //{
+    if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
+    {
       B4Note_Playable.RepeatForever = true;
-    //}
+    }
     DacAudio.Play(&B4Note_Playable);
   }
   else if(noteSelector == 8)
@@ -470,10 +476,10 @@ void PlayNote(int noteSelector, int sensor)
     
     XT_Wav_Class C5Note_Playable(C5Note);
     C5Note_Playable.Speed = 1.0;
-    //if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
-    //{
+    if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
+    {
       C5Note_Playable.RepeatForever = true;
-    //}
+    }
     DacAudio.Play(&C5Note_Playable);
   }
   else
@@ -871,7 +877,9 @@ void PrepareNote_Piano(int noteSelector)
 // Inits all notes with playable trumpet data
 void PrepareAllNotes_Trumpet()
 {
+  lcd.println("HERE1");
   PrepareNote_Trumpet(1);
+  lcd.println("HERE2");
   PrepareNote_Trumpet(2);
   PrepareNote_Trumpet(3);
   PrepareNote_Trumpet(4);
