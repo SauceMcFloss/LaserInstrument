@@ -448,7 +448,6 @@ void loop()
     
       //lcd.print("                        ");
       //lcd.setCursor(0, 1);
-      threshold = threshold + 1;
     }
   }
 }
