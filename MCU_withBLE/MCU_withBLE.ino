@@ -289,7 +289,7 @@ void loop()
     else
     {
   
-      if(threshold > 0)
+      if(analogRead(sensorClow) < threshold)
       {
         // For Debugging
         Serial.print("Sensor Clow! ");
@@ -307,7 +307,7 @@ void loop()
         //PlayNote(1, sensorClow); // PlayNote (Note, Sensor) - Note = CLow, CLowSensor = A0
       }
     
-      if(threshold > 50 && threshold < 100)
+      if(analogRead(sensorD) < threshold)
       {
         // For Debugging
         Serial.print("Sensor D! ");
@@ -326,7 +326,7 @@ void loop()
         //PlayNote(2, sensorD); // PlayNote (Note, Sensor) - Note = D, DSensor = A3
       }
     
-      if(threshold > 100 && threshold < 150)
+      if(analogRead(sensorE) < threshold)
       {
         // For Debugging
         Serial.print("Sensor E! ");
@@ -345,7 +345,7 @@ void loop()
         //PlayNote(3, sensorE); // PlayNote (Note, Sensor) - Note = E, ESensor = A6
       }
     
-      if(threshold > 150 && threshold < 200)
+      if(analogRead(sensorF) < threshold)
       {
         // For Debugging
         Serial.print("Sensor F! ");
@@ -364,7 +364,7 @@ void loop()
         //PlayNote(4, sensorF); // PlayNote (Note, Sensor) - Note = F, FSensor = A7
       }
     
-      if(threshold > 200 && threshold < 250)
+      if(analogRead(sensorG) < threshold)
       {
         // For Debugging
         Serial.print("Sensor G! ");
@@ -383,7 +383,7 @@ void loop()
         //PlayNote(5, sensorG); // PlayNote (Note, Sensor) - Note = G, GSensor = A4
       }
     
-      if(threshold > 250 && && threshold < 300)
+      if(analogRead(sensorA) < threshold)
       {
         // For Debugging
         Serial.print("Sensor A! ");
@@ -402,7 +402,7 @@ void loop()
         //PlayNote(6, sensorA); // PlayNote (Note, Sensor) - Note = A, ASensor = A5
       }
     
-      if(threshold > 300 && threshold < 350)
+      if(analogRead(sensorB) < threshold)
       {
         // For Debugging
         Serial.print("Sensor B! ");
@@ -421,7 +421,7 @@ void loop()
         //PlayNote(7, sensorB); // PlayNote (Note, Sensor) - Note = B, BSensor = A16
       }
     
-      if(threshold > 350)
+      if(analogRead(sensorChigh) < threshold)
       {
         // For Debugging
         Serial.print("Sensor Chigh! ");
