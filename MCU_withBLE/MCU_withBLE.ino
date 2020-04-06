@@ -304,10 +304,10 @@ void loop()
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
         
-        PlayNote(1, sensorClow); // PlayNote (Note, Sensor) - Note = CLow, CLowSensor = A0
+        //PlayNote(1, sensorClow); // PlayNote (Note, Sensor) - Note = CLow, CLowSensor = A0
       }
     
-      if(threshold > 50)
+      if(threshold > 50 && threshold < 100)
       {
         // For Debugging
         Serial.print("Sensor D! ");
@@ -323,10 +323,10 @@ void loop()
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
         
-        PlayNote(2, sensorD); // PlayNote (Note, Sensor) - Note = D, DSensor = A3
+        //PlayNote(2, sensorD); // PlayNote (Note, Sensor) - Note = D, DSensor = A3
       }
     
-      if(threshold > 100)
+      if(threshold > 100 && threshold < 150)
       {
         // For Debugging
         Serial.print("Sensor E! ");
@@ -342,10 +342,10 @@ void loop()
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
         
-        PlayNote(3, sensorE); // PlayNote (Note, Sensor) - Note = E, ESensor = A6
+        //PlayNote(3, sensorE); // PlayNote (Note, Sensor) - Note = E, ESensor = A6
       }
     
-      if(threshold > 150)
+      if(threshold > 150 && threshold < 200)
       {
         // For Debugging
         Serial.print("Sensor F! ");
@@ -361,10 +361,10 @@ void loop()
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
         
-        PlayNote(4, sensorF); // PlayNote (Note, Sensor) - Note = F, FSensor = A7
+        //PlayNote(4, sensorF); // PlayNote (Note, Sensor) - Note = F, FSensor = A7
       }
     
-      if(threshold > 200)
+      if(threshold > 200 && threshold < 250)
       {
         // For Debugging
         Serial.print("Sensor G! ");
@@ -380,10 +380,10 @@ void loop()
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
         
-        PlayNote(5, sensorG); // PlayNote (Note, Sensor) - Note = G, GSensor = A4
+        //PlayNote(5, sensorG); // PlayNote (Note, Sensor) - Note = G, GSensor = A4
       }
     
-      if(threshold > 250)
+      if(threshold > 250 && && threshold < 300)
       {
         // For Debugging
         Serial.print("Sensor A! ");
@@ -399,10 +399,10 @@ void loop()
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
         
-        PlayNote(6, sensorA); // PlayNote (Note, Sensor) - Note = A, ASensor = A5
+        //PlayNote(6, sensorA); // PlayNote (Note, Sensor) - Note = A, ASensor = A5
       }
     
-      if(threshold > 300)
+      if(threshold > 300 && threshold < 350)
       {
         // For Debugging
         Serial.print("Sensor B! ");
@@ -418,7 +418,7 @@ void loop()
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
         
-        PlayNote(7, sensorB); // PlayNote (Note, Sensor) - Note = B, BSensor = A16
+        //PlayNote(7, sensorB); // PlayNote (Note, Sensor) - Note = B, BSensor = A16
       }
     
       if(threshold > 350)
@@ -437,7 +437,7 @@ void loop()
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
         
-        PlayNote(8, sensorChigh); // PlayNote (Note, Sensor) - Note = CHigh, CHighSensor = A14
+        //PlayNote(8, sensorChigh); // PlayNote (Note, Sensor) - Note = CHigh, CHighSensor = A14
       }
     
       // Default actions...
