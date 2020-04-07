@@ -1,4 +1,4 @@
-package com.example.bdskv2;
+package com.example.bdskv2.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 

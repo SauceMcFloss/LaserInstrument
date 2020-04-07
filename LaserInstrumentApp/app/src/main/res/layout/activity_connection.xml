@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +8,8 @@
     android:paddingRight="10dp"
     android:paddingTop="10dp"
     android:orientation="vertical"
-    tools:context=".ui.MainActivity">
+    android:background="@color/primaryBackground"
+    tools:context=".ui.ConnectionActivity">
 
     <TextView
         android:layout_width="fill_parent"
@@ -19,7 +19,7 @@
         android:textSize="20dp"
         android:paddingBottom="10dip"
         android:textColor="@color/colorPrimaryDark"
-        android:text="Bluetooth LE Developer Study Guide" />
+        android:text="Bluetooth Devices" />
 
     <ListView
         android:id="@+id/deviceList"
@@ -29,6 +29,7 @@
         android:layout_weight="1" />
 
     <Button
+        style="@style/button_default"
         android:id="@+id/scanButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

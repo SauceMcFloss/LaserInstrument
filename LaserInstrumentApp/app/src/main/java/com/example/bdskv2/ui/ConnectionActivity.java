@@ -24,14 +24,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.bdskv2.BleScanner;
+import com.example.bdskv2.bluetooth.BleScanner;
 import com.example.bdskv2.Constants;
 import com.example.bdskv2.R;
-import com.example.bdskv2.ScanResultsConsumer;
+import com.example.bdskv2.bluetooth.ScanResultsConsumer;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements ScanResultsConsumer
+public class ConnectionActivity extends AppCompatActivity implements ScanResultsConsumer
 {
     private boolean ble_scanning = false;
     private Handler handler = new Handler();
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultsConsum
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_connection);
         setButtonText();
         ble_device_list_adapter = new ListAdapter();
         ListView listView = (ListView) this.findViewById(R.id.deviceList);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultsConsum
                     toast.cancel();
                 }
 
-                Intent intent = new Intent(MainActivity.this, PeripheralControlActivity.class);
+                Intent intent = new Intent(ConnectionActivity.this, PeripheralControlActivity.class);
                 intent.putExtra(PeripheralControlActivity.EXTRA_NAME, device.getName());
                 intent.putExtra(PeripheralControlActivity.EXTRA_ID, device.getAddress());
                 startActivity(intent);
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultsConsum
             @Override
             public void run() {
                 ((TextView)
-                        MainActivity.this.findViewById(R.id.scanButton)).setText(button_text);
+                        ConnectionActivity.this.findViewById(R.id.scanButton)).setText(button_text);
             }
         });
     }
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultsConsum
             builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 public void onDismiss(DialogInterface dialog) {
                     Log.d(Constants.TAG, "Requesting permissions after explanation");
-                    ActivityCompat.requestPermissions(MainActivity.this, new
+                    ActivityCompat.requestPermissions(ConnectionActivity.this, new
                             String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
                 }
             });
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements ScanResultsConsum
         public View getView(int i, View view, ViewGroup viewGroup) {
             ViewHolder viewHolder;
             if (view == null) {
-                view = MainActivity.this.getLayoutInflater().inflate(R.layout.list_row,
+                view = ConnectionActivity.this.getLayoutInflater().inflate(R.layout.list_row,
                         null);
                 viewHolder = new ViewHolder();
                 viewHolder.text = (TextView) view.findViewById(R.id.textView);

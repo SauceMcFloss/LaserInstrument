@@ -1,4 +1,4 @@
-package com.example.bdskv2;
+package com.example.bdskv2.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
@@ -11,6 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
+
+import com.example.bdskv2.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
 
