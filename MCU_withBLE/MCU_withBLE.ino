@@ -116,10 +116,7 @@ void setup() {
   // initialize LCD and backlight
   lcd.init();                     
   lcd.backlight();
-  lcd.createChar(0, note);
   lcd.createChar(1, doubleNote);
-  lcd.createChar(2, sharpAccidental);
-  lcd.createChar(3, flat);
 
   // print main screen
   lcd.setCursor(0, 0);
