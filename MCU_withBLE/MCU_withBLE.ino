@@ -32,11 +32,7 @@ int lcdRows = 2;
 
 // set LCD address, number of col and rows
 LiquidCrystal_I2C lcd(0x3F, lcdColumns, lcdRows); 
-byte note[8] = { 0b00000, 0b00100, 0b00110, 0b00101, 0b00100, 0b01100, 0b01100, 0b00000 };
 byte doubleNote[8] = { 0b01000, 0b01100, 0b01010, 0b01001, 0b01001, 0b11001, 0b11011, 0b00011 }; 
-byte sharpAccidental[8] = { 0b00010, 0b01011, 0b01110, 0b11010, 0b01011, 0b01110, 0b11010, 0b01000 };
-byte flat[8] = { B00000, B10000, B10000, B10000, B11100, B10100, B11000, B10000 }; 
-
 
 // SD Card Stuff
 XT_DAC_Audio_Class DacAudio(25,0); // DAC audio player assigned to pin 25 (could also support pin 26)
@@ -150,12 +146,12 @@ void setup() {
   pinMode(RotBut_pin, INPUT_PULLUP);
 
   // setup SD
-//  Serial.println("Mounting card...");
-//  if(!SD.begin())
-//  {
-//     Serial.println("Card mount failed.");
-//     return;
-//  }
+  Serial.println("Mounting card...");
+  if(!SD.begin())
+  {
+     Serial.println("Card mount failed.");
+     return;
+  }
   Serial.println("Card mount succeeded.");
 
   // prepare for playing
@@ -298,7 +294,7 @@ void loop()
       {
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x3c; // middle C
+        midi[3] = 0x3c; // C4 
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
@@ -320,7 +316,7 @@ void loop()
       {
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x3e; // D
+        midi[3] = 0x3e; // D4
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
@@ -342,7 +338,7 @@ void loop()
       {
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x40; // middle C
+        midi[3] = 0x40; // E4
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
@@ -364,7 +360,7 @@ void loop()
       {
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x41; // middle C
+        midi[3] = 0x41; // F4
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
@@ -386,7 +382,7 @@ void loop()
       {
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x43; // middle C
+        midi[3] = 0x43; // G4
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
@@ -408,7 +404,7 @@ void loop()
       {
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x45; // middle C
+        midi[3] = 0x45; // A4
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
@@ -430,7 +426,7 @@ void loop()
       {
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x47  ; // middle C
+        midi[3] = 0x47; // B4
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
@@ -452,7 +448,7 @@ void loop()
       {
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x48; // middle C
+        midi[3] = 0x48; // C5
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
@@ -462,13 +458,9 @@ void loop()
     }
   
     // Default actions...
-  
-    //Serial.println("Searching...");
     lcd.setCursor(0,1);
     lcd.print("c d e f g a b c");
   
-    //lcd.print("                        ");
-    //lcd.setCursor(0, 1);
   }
 }
 
@@ -498,16 +490,10 @@ int FindMallocSize (const char* filename)
 // Play the note at the selected index while user input is detected at the specified sensor
 void PlayNote(int noteSelector, int sensor)
 {
-  // For Debugging
-  char* debugMessage;
-  //
   
   if(noteSelector == 1)
   {
-    // For Debugging
-    debugMessage = "Sensor Clow! ";
-    //
-    
+        
     XT_Wav_Class C4Note_Playable(C4Note);
     C4Note_Playable.Speed = 1.0;
     if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
@@ -517,11 +503,7 @@ void PlayNote(int noteSelector, int sensor)
     DacAudio.Play(&C4Note_Playable);
   }
   else if(noteSelector == 2)
-  {
-    // For Debugging
-    debugMessage = "Sensor D! ";
-    //
-    
+  {    
     XT_Wav_Class D4Note_Playable(D4Note);
     D4Note_Playable.Speed = 1.0;
     if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
@@ -531,11 +513,7 @@ void PlayNote(int noteSelector, int sensor)
     DacAudio.Play(&D4Note_Playable);
   }
   else if(noteSelector == 3)
-  {
-    // For Debugging
-    debugMessage = "Sensor E! ";
-    //
-    
+  {    
     XT_Wav_Class E4Note_Playable(E4Note);
     E4Note_Playable.Speed = 1.0;
     if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
@@ -545,11 +523,7 @@ void PlayNote(int noteSelector, int sensor)
     DacAudio.Play(&E4Note_Playable);
   }
   else if(noteSelector == 4)
-  {
-    // For Debugging
-    debugMessage = "Sensor F! ";
-    //
-    
+  { 
     XT_Wav_Class F4Note_Playable(F4Note);
     F4Note_Playable.Speed = 1.0;
     if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
@@ -560,10 +534,6 @@ void PlayNote(int noteSelector, int sensor)
   }
   else if(noteSelector == 5)
   {
-    // For Debugging
-    debugMessage = "Sensor G! ";
-    //
-    
     XT_Wav_Class G4Note_Playable(G4Note);
     G4Note_Playable.Speed = 1.0;
     if(InstrumentPlaying != 2) // don't repeat if piano, but fine if percussion (drumroll key)
@@ -573,11 +543,7 @@ void PlayNote(int noteSelector, int sensor)
     DacAudio.Play(&G4Note_Playable);
   }
   else if(noteSelector == 6)
-  {
-    // For Debugging
-    debugMessage = "Sensor A! ";
-    //
-    
+  { 
     XT_Wav_Class A4Note_Playable(A4Note);
     A4Note_Playable.Speed = 1.0;
     if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
@@ -588,10 +554,6 @@ void PlayNote(int noteSelector, int sensor)
   }
   else if(noteSelector == 7)
   {
-    // For Debugging
-    debugMessage = "Sensor B! ";
-    //
-    
     XT_Wav_Class B4Note_Playable(B4Note);
     B4Note_Playable.Speed = 1.0;
     if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
@@ -602,10 +564,6 @@ void PlayNote(int noteSelector, int sensor)
   }
   else if(noteSelector == 8)
   {
-    // For Debugging
-    debugMessage = "Sensor Chigh! ";
-    //
-    
     XT_Wav_Class C5Note_Playable(C5Note);
     C5Note_Playable.Speed = 1.0;
     if(InstrumentPlaying != 1 && InstrumentPlaying != 2)
@@ -616,19 +574,13 @@ void PlayNote(int noteSelector, int sensor)
   }
   else
   {
-    // For Debugging
-    debugMessage = "Error playing note! Note selector value must be 1 to 8. ";
-    //
-    
     Serial.println("Error playing note! Note selector value must be 1 to 8.");
   }
 
   while(analogRead(sensor) < threshold) // Play the loaded audio until the specified sensor stops registering user input
   {
     // For Debugging
-    Serial.print(debugMessage);
     Serial.println(analogRead(sensor));
-    //
     
     DacAudio.FillBuffer();
   }
