@@ -164,291 +164,311 @@ void setup() {
 
 
 void loop()
-{  
-  if (deviceConnected)
+{   
+  //digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(diode, HIGH);
+
+  // Rotary Encoder Check
+  // rotation
+  RotA = digitalRead(RotA_pin);    // Read encoder pins
+  RotB = digitalRead(RotB_pin);   
+  
+  if((!RotA) && (RotA_prev))
   {
-    
-    //digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(diode, HIGH);
-  
-    // Rotary Encoder Check
-    // rotation
-    RotA = digitalRead(RotA_pin);    // Read encoder pins
-    RotB = digitalRead(RotB_pin);   
-    
-    if((!RotA) && (RotA_prev))
-    {
-      // A has gone from high to low 
-      if(RotB) {
-        // B is high so clockwise
-        InstrumentSelector = (InstrumentSelector + 1) % 5;
-      }   
-      else {
-        // B is low so counter-clockwise      
-        InstrumentSelector = (InstrumentSelector - 1) % 5;
-      }
-  
-      delay(100);
+    // A has gone from high to low 
+    if(RotB) {
+      // B is high so clockwise
+      InstrumentSelector = (InstrumentSelector + 1) % 5;
     }   
-    RotA_prev = RotA;     // Store value of A for next time
-  
-    lcd.setCursor(0, 0);
-    if(InstrumentSelector == 0){
-      lcd.print("Flute");
-      Serial.print("Flute");
-      if(InstrumentSelector == InstrumentPlaying){
-        lcd.print(":");
-        Serial.print(":");
-      }
-      else{
-        lcd.print("?");
-        Serial.print("?");
-      }
-      lcd.print("         ");
+    else {
+      // B is low so counter-clockwise      
+      InstrumentSelector = (InstrumentSelector - 1) % 5;
     }
-    else if(InstrumentSelector == 1){
-      lcd.print("Percussion");
-      Serial.print("Percussion");
-      if(InstrumentSelector == InstrumentPlaying){
-        lcd.print(":");
-        Serial.print(":");
-      }
-      else{
-        lcd.print("?");
-        Serial.print("?");
-      }
-      lcd.print("    ");
+
+    delay(100);
+  }   
+  RotA_prev = RotA;     // Store value of A for next time
+
+  lcd.setCursor(0, 0);
+  if(InstrumentSelector == 0){
+    lcd.print("Flute");
+    Serial.print("Flute");
+    if(InstrumentSelector == InstrumentPlaying){
+      lcd.print(":");
+      Serial.print(":");
     }
-    else if(InstrumentSelector == 2){
-      lcd.print("Piano");
-      Serial.print("Piano");
-      if(InstrumentSelector == InstrumentPlaying){
-        lcd.print(":");
-        Serial.print(":");
-      }
-      else{
-        lcd.print("?");
-        Serial.print("?");
-      }
-      lcd.print("         ");
+    else{
+      lcd.print("?");
+      Serial.print("?");
     }
-    else if(InstrumentSelector == 3){
-      lcd.print("Trumpet");
-      Serial.print("Trumpet");
-      if(InstrumentSelector == InstrumentPlaying){
-        lcd.print(":");
-        Serial.print(":");
-      }
-      else{
-        lcd.print("?");
-        Serial.print("?");
-      }
-      lcd.print("       ");
+    lcd.print("         ");
+  }
+  else if(InstrumentSelector == 1){
+    lcd.print("Percussion");
+    Serial.print("Percussion");
+    if(InstrumentSelector == InstrumentPlaying){
+      lcd.print(":");
+      Serial.print(":");
     }
-    else if(InstrumentSelector == 4){
-      lcd.print("Violin");
-      Serial.print("Violin");
-      if(InstrumentSelector == InstrumentPlaying){
-        lcd.print(":");
-        Serial.print(":");
-      }
-      else{
-        lcd.print("?");
-        Serial.print("?");
-      }
-      lcd.print("        ");
+    else{
+      lcd.print("?");
+      Serial.print("?");
     }
-  
-    // button
-    if(!digitalRead(RotBut_pin)){
-      if(InstrumentPlaying != InstrumentSelector)
-      {
-        InstrumentPlaying = InstrumentSelector;
-    
-        lcd.setCursor(0, 0);
-        lcd.print("Preparing...   ");
-        Serial.print("Preparing...");
-      
-        if(InstrumentSelector == 0){
-          PrepareAllNotes_Flute();
-        }
-        else if(InstrumentSelector == 1){
-          PrepareAllNotes_Percussion();
-        }
-        else if(InstrumentSelector == 2){
-          PrepareAllNotes_Piano();
-        }
-        else if(InstrumentSelector == 3){
-          PrepareAllNotes_Trumpet();
-        }
-        else if(InstrumentSelector == 4){
-          PrepareAllNotes_Violin();
-        } 
-      }
+    lcd.print("    ");
+  }
+  else if(InstrumentSelector == 2){
+    lcd.print("Piano");
+    Serial.print("Piano");
+    if(InstrumentSelector == InstrumentPlaying){
+      lcd.print(":");
+      Serial.print(":");
     }
-    else
+    else{
+      lcd.print("?");
+      Serial.print("?");
+    }
+    lcd.print("         ");
+  }
+  else if(InstrumentSelector == 3){
+    lcd.print("Trumpet");
+    Serial.print("Trumpet");
+    if(InstrumentSelector == InstrumentPlaying){
+      lcd.print(":");
+      Serial.print(":");
+    }
+    else{
+      lcd.print("?");
+      Serial.print("?");
+    }
+    lcd.print("       ");
+  }
+  else if(InstrumentSelector == 4){
+    lcd.print("Violin");
+    Serial.print("Violin");
+    if(InstrumentSelector == InstrumentPlaying){
+      lcd.print(":");
+      Serial.print(":");
+    }
+    else{
+      lcd.print("?");
+      Serial.print("?");
+    }
+    lcd.print("        ");
+  }
+
+  // button
+  if(!digitalRead(RotBut_pin)){
+    if(InstrumentPlaying != InstrumentSelector)
     {
+      InstrumentPlaying = InstrumentSelector;
   
-      if(analogRead(sensorClow) < threshold)
+      lcd.setCursor(0, 0);
+      lcd.print("Preparing...   ");
+      Serial.print("Preparing...");
+    
+      if(InstrumentSelector == 0){
+        PrepareAllNotes_Flute();
+      }
+      else if(InstrumentSelector == 1){
+        PrepareAllNotes_Percussion();
+      }
+      else if(InstrumentSelector == 2){
+        PrepareAllNotes_Piano();
+      }
+      else if(InstrumentSelector == 3){
+        PrepareAllNotes_Trumpet();
+      }
+      else if(InstrumentSelector == 4){
+        PrepareAllNotes_Violin();
+      } 
+    }
+  }
+  else
+  {
+
+    if(analogRead(sensorClow) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor Clow! ");
+      lcd.setCursor(0,1);
+      lcd.write(1);
+      lcd.print(" d e f g a b c");
+
+      if (deviceConnected)
       {
-        // For Debugging
-        Serial.print("Sensor Clow! ");
-        lcd.setCursor(0,1);
-        lcd.write(1);
-        lcd.print(" d e f g a b c");
-        
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
         midi[3] = 0x3c; // middle C
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
-        
-        //PlayNote(1, sensorClow); // PlayNote (Note, Sensor) - Note = CLow, CLowSensor = A0
       }
-    
-      if(analogRead(sensorD) < threshold)
+      
+      PlayNote(1, sensorClow); // PlayNote (Note, Sensor) - Note = CLow, CLowSensor = A0
+    }
+  
+    if(analogRead(sensorD) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor D! ");
+      lcd.setCursor(0,1);
+      lcd.print("c ");
+      lcd.write(1);
+      lcd.print(" e f g a b c");
+
+      if (deviceConnected)
       {
-        // For Debugging
-        Serial.print("Sensor D! ");
-        lcd.setCursor(0,1);
-        lcd.print("c ");
-        lcd.write(1);
-        lcd.print(" e f g a b c");
-        
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
         midi[3] = 0x3e; // D
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
-        
-        //PlayNote(2, sensorD); // PlayNote (Note, Sensor) - Note = D, DSensor = A3
       }
-    
-      if(analogRead(sensorE) < threshold)
+      
+      PlayNote(2, sensorD); // PlayNote (Note, Sensor) - Note = D, DSensor = A3
+    }
+  
+    if(analogRead(sensorE) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor E! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d ");
+      lcd.write(1);
+      lcd.print(" f g a b c");
+
+      if (deviceConnected)
       {
-        // For Debugging
-        Serial.print("Sensor E! ");
-        lcd.setCursor(0,1);
-        lcd.print("c d ");
-        lcd.write(1);
-        lcd.print(" f g a b c");
-        
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
         midi[3] = 0x40; // middle C
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
-        
-        //PlayNote(3, sensorE); // PlayNote (Note, Sensor) - Note = E, ESensor = A6
       }
-    
-      if(analogRead(sensorF) < threshold)
+      
+      PlayNote(3, sensorE); // PlayNote (Note, Sensor) - Note = E, ESensor = A6
+    }
+  
+    if(analogRead(sensorF) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor F! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d e ");
+      lcd.write(1);
+      lcd.print(" g a b c");
+
+      if (deviceConnected)
       {
-        // For Debugging
-        Serial.print("Sensor F! ");
-        lcd.setCursor(0,1);
-        lcd.print("c d e ");
-        lcd.write(1);
-        lcd.print(" g a b c");
-        
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
         midi[3] = 0x41; // middle C
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
-        
-        //PlayNote(4, sensorF); // PlayNote (Note, Sensor) - Note = F, FSensor = A7
       }
-    
-      if(analogRead(sensorG) < threshold)
+      
+      PlayNote(4, sensorF); // PlayNote (Note, Sensor) - Note = F, FSensor = A7
+    }
+  
+    if(analogRead(sensorG) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor G! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d e f ");
+      lcd.write(1);
+      lcd.print(" a b c");
+
+      if (deviceConnected)
       {
-        // For Debugging
-        Serial.print("Sensor G! ");
-        lcd.setCursor(0,1);
-        lcd.print("c d e f ");
-        lcd.write(1);
-        lcd.print(" a b c");
-         
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
         midi[3] = 0x43; // middle C
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
-        
-        //PlayNote(5, sensorG); // PlayNote (Note, Sensor) - Note = G, GSensor = A4
       }
-    
-      if(analogRead(sensorA) < threshold)
+      
+      PlayNote(5, sensorG); // PlayNote (Note, Sensor) - Note = G, GSensor = A4
+    }
+  
+    if(analogRead(sensorA) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor A! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d e f g ");
+      lcd.write(1);
+      lcd.print(" b c");
+
+      if (deviceConnected)
       {
-        // For Debugging
-        Serial.print("Sensor A! ");
-        lcd.setCursor(0,1);
-        lcd.print("c d e f g ");
-        lcd.write(1);
-        lcd.print(" b c");
-    
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
         midi[3] = 0x45; // middle C
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
-        
-        //PlayNote(6, sensorA); // PlayNote (Note, Sensor) - Note = A, ASensor = A5
       }
-    
-      if(analogRead(sensorB) < threshold)
+      
+      PlayNote(6, sensorA); // PlayNote (Note, Sensor) - Note = A, ASensor = A5
+    }
+  
+    if(analogRead(sensorB) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor B! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d e f g a ");
+      lcd.write(1);
+      lcd.print(" c");
+
+      if (deviceConnected)
       {
-        // For Debugging
-        Serial.print("Sensor B! ");
-        lcd.setCursor(0,1);
-        lcd.print("c d e f g a ");
-        lcd.write(1);
-        lcd.print(" c");
-              
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
         midi[3] = 0x47  ; // middle C
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
-        
-        //PlayNote(7, sensorB); // PlayNote (Note, Sensor) - Note = B, BSensor = A16
       }
-    
-      if(analogRead(sensorChigh) < threshold)
+      
+      PlayNote(7, sensorB); // PlayNote (Note, Sensor) - Note = B, BSensor = A16
+    }
+  
+    if(analogRead(sensorChigh) < threshold)
+    {
+      // For Debugging
+      Serial.print("Sensor Chigh! ");
+      lcd.setCursor(0,1);
+      lcd.print("c d e f g a b ");
+      lcd.write(1);
+      lcd.print("");
+
+      if (deviceConnected)
       {
-        // For Debugging
-        Serial.print("Sensor Chigh! ");
-        lcd.setCursor(0,1);
-        lcd.print("c d e f g a b ");
-        lcd.write(1);
-        lcd.print("");
-              
         // send MIDI
         midi[2] = 0x90; // note down, channel 0
         midi[3] = 0x48; // middle C
         midi[4] = 127;  // velocity
         pCharacteristic->setValue(midi, 5); // packet, length in bytes
         pCharacteristic->notify();
-        
-        //PlayNote(8, sensorChigh); // PlayNote (Note, Sensor) - Note = CHigh, CHighSensor = A14
       }
-    
-      // Default actions...
-    
-      //Serial.println("Searching...");
-      lcd.setCursor(0,1);
-      lcd.print("c d e f g a b c");
-    
-      //lcd.print("                        ");
-      //lcd.setCursor(0, 1);
+      
+      PlayNote(8, sensorChigh); // PlayNote (Note, Sensor) - Note = CHigh, CHighSensor = A14
     }
+  
+    // Default actions...
+  
+    //Serial.println("Searching...");
+    lcd.setCursor(0,1);
+    lcd.print("c d e f g a b c");
+  
+    //lcd.print("                        ");
+    //lcd.setCursor(0, 1);
   }
 }
 
