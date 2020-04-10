@@ -258,7 +258,6 @@ void loop()
   }
   else
   {
-
     if(analogRead(sensorClow) < threshold)
     {
       // For Debugging
@@ -266,16 +265,7 @@ void loop()
       lcd.write(1);
       lcd.print(" d e f g a b c");
 
-      if (deviceConnected)
-      {
-        // send MIDI
-        midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x3c; // C4 
-        midi[4] = 127;  // velocity
-        pCharacteristic->setValue(midi, 5); // packet, length in bytes
-        pCharacteristic->notify();
-      }
-      
+      sendMidi(0x3c);
       PlayNote(1, sensorClow); // PlayNote (Note, Sensor) - Note = CLow, CLowSensor = A0
     }
   
@@ -287,16 +277,7 @@ void loop()
       lcd.write(1);
       lcd.print(" e f g a b c");
 
-      if (deviceConnected)
-      {
-        // send MIDI
-        midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x3e; // D4
-        midi[4] = 127;  // velocity
-        pCharacteristic->setValue(midi, 5); // packet, length in bytes
-        pCharacteristic->notify();
-      }
-      
+      sendMidi(0x3e);
       PlayNote(2, sensorD); // PlayNote (Note, Sensor) - Note = D, DSensor = A3
     }
   
@@ -308,16 +289,7 @@ void loop()
       lcd.write(1);
       lcd.print(" f g a b c");
 
-      if (deviceConnected)
-      {
-        // send MIDI
-        midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x40; // E4
-        midi[4] = 127;  // velocity
-        pCharacteristic->setValue(midi, 5); // packet, length in bytes
-        pCharacteristic->notify();
-      }
-      
+      sendMidi(0x40);
       PlayNote(3, sensorE); // PlayNote (Note, Sensor) - Note = E, ESensor = A6
     }
   
@@ -329,16 +301,7 @@ void loop()
       lcd.write(1);
       lcd.print(" g a b c");
 
-      if (deviceConnected)
-      {
-        // send MIDI
-        midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x41; // F4
-        midi[4] = 127;  // velocity
-        pCharacteristic->setValue(midi, 5); // packet, length in bytes
-        pCharacteristic->notify();
-      }
-      
+      sendMidi(0x41);
       PlayNote(4, sensorF); // PlayNote (Note, Sensor) - Note = F, FSensor = A7
     }
   
@@ -349,16 +312,7 @@ void loop()
       lcd.write(1);
       lcd.print(" a b c");
 
-      if (deviceConnected)
-      {
-        // send MIDI
-        midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x43; // G4
-        midi[4] = 127;  // velocity
-        pCharacteristic->setValue(midi, 5); // packet, length in bytes
-        pCharacteristic->notify();
-      }
-      
+      sendMidi(0x43);
       PlayNote(5, sensorG); // PlayNote (Note, Sensor) - Note = G, GSensor = A4
     }
   
@@ -369,16 +323,7 @@ void loop()
       lcd.write(1);
       lcd.print(" b c");
 
-      if (deviceConnected)
-      {
-        // send MIDI
-        midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x45; // A4
-        midi[4] = 127;  // velocity
-        pCharacteristic->setValue(midi, 5); // packet, length in bytes
-        pCharacteristic->notify();
-      }
-      
+      sendMidi(0x45);
       PlayNote(6, sensorA); // PlayNote (Note, Sensor) - Note = A, ASensor = A5
     }
   
@@ -389,16 +334,7 @@ void loop()
       lcd.write(1);
       lcd.print(" c");
 
-      if (deviceConnected)
-      {
-        // send MIDI
-        midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x47; // B4
-        midi[4] = 127;  // velocity
-        pCharacteristic->setValue(midi, 5); // packet, length in bytes
-        pCharacteristic->notify();
-      }
-      
+      sendMidi(0x47);
       PlayNote(7, sensorB); // PlayNote (Note, Sensor) - Note = B, BSensor = A16
     }
   
@@ -409,16 +345,7 @@ void loop()
       lcd.write(1);
       lcd.print("");
 
-      if (deviceConnected)
-      {
-        // send MIDI
-        midi[2] = 0x90; // note down, channel 0
-        midi[3] = 0x48; // C5
-        midi[4] = 127;  // velocity
-        pCharacteristic->setValue(midi, 5); // packet, length in bytes
-        pCharacteristic->notify();
-      }
-      
+      sendMidi(0x48);
       PlayNote(8, sensorChigh); // PlayNote (Note, Sensor) - Note = CHigh, CHighSensor = A14
     }
   
@@ -430,6 +357,20 @@ void loop()
 }
 
 // Other functions
+
+// send midi info through BLE
+void sendMidi(uint8_t note)
+{
+  if (deviceConnected)
+  {
+    // send MIDI
+    midi[2] = 0x90; // note down, channel 0
+    midi[3] = note; // C5
+    midi[4] = 127;  // velocity
+    pCharacteristic->setValue(midi, 5); // packet, length in bytes
+    pCharacteristic->notify();
+  }  
+}
 
 // Read the first 8 bytes from the .wav file to determine how much space should be malloc'd for the playable array
 int FindMallocSize (const char* filename)
