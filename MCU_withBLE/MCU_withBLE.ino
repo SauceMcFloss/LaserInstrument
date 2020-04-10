@@ -121,7 +121,6 @@ void setup() {
   // print main screen
   lcd.setCursor(0, 0);
   lcd.print("Startup...     ");
-  Serial.print("Startup...");
   lcd.setCursor(0, 1);
   lcd.print("c d e f g a b c");
 
@@ -143,13 +142,10 @@ void setup() {
   pinMode(RotBut_pin, INPUT_PULLUP);
 
   // setup SD
-  Serial.println("Mounting card...");
   if(!SD.begin())
   {
-     Serial.println("Card mount failed.");
-     return;
+    return;
   }
-  Serial.println("Card mount succeeded.");
 
   // prepare for playing
   PrepareAllNotes_Piano(); // piano is default at startup
@@ -185,66 +181,51 @@ void loop()
   lcd.setCursor(0, 0);
   if(InstrumentSelector == 0){
     lcd.print("Flute");
-    Serial.print("Flute");
     if(InstrumentSelector == InstrumentPlaying){
       lcd.print(":");
-      Serial.print(":");
     }
     else{
       lcd.print("?");
-      Serial.print("?");
     }
     lcd.print("         ");
   }
   else if(InstrumentSelector == 1){
     lcd.print("Percussion");
-    Serial.print("Percussion");
     if(InstrumentSelector == InstrumentPlaying){
       lcd.print(":");
-      Serial.print(":");
     }
     else{
       lcd.print("?");
-      Serial.print("?");
     }
     lcd.print("    ");
   }
   else if(InstrumentSelector == 2){
     lcd.print("Piano");
-    Serial.print("Piano");
     if(InstrumentSelector == InstrumentPlaying){
       lcd.print(":");
-      Serial.print(":");
     }
     else{
       lcd.print("?");
-      Serial.print("?");
     }
     lcd.print("         ");
   }
   else if(InstrumentSelector == 3){
     lcd.print("Trumpet");
-    Serial.print("Trumpet");
     if(InstrumentSelector == InstrumentPlaying){
       lcd.print(":");
-      Serial.print(":");
     }
     else{
       lcd.print("?");
-      Serial.print("?");
     }
     lcd.print("       ");
   }
   else if(InstrumentSelector == 4){
     lcd.print("Violin");
-    Serial.print("Violin");
     if(InstrumentSelector == InstrumentPlaying){
       lcd.print(":");
-      Serial.print(":");
     }
     else{
       lcd.print("?");
-      Serial.print("?");
     }
     lcd.print("        ");
   }
@@ -257,7 +238,6 @@ void loop()
   
       lcd.setCursor(0, 0);
       lcd.print("Preparing...   ");
-      Serial.print("Preparing...");
     
       if(InstrumentSelector == 0){
         PrepareAllNotes_Flute();
@@ -282,7 +262,6 @@ void loop()
     if(analogRead(sensorClow) < threshold)
     {
       // For Debugging
-      Serial.print("Sensor Clow! ");
       lcd.setCursor(0,1);
       lcd.write(1);
       lcd.print(" d e f g a b c");
@@ -303,7 +282,6 @@ void loop()
     if(analogRead(sensorD) < threshold)
     {
       // For Debugging
-      Serial.print("Sensor D! ");
       lcd.setCursor(0,1);
       lcd.print("c ");
       lcd.write(1);
@@ -325,7 +303,6 @@ void loop()
     if(analogRead(sensorE) < threshold)
     {
       // For Debugging
-      Serial.print("Sensor E! ");
       lcd.setCursor(0,1);
       lcd.print("c d ");
       lcd.write(1);
@@ -347,7 +324,6 @@ void loop()
     if(analogRead(sensorF) < threshold)
     {
       // For Debugging
-      Serial.print("Sensor F! ");
       lcd.setCursor(0,1);
       lcd.print("c d e ");
       lcd.write(1);
@@ -368,8 +344,6 @@ void loop()
   
     if(analogRead(sensorG) < threshold)
     {
-      // For Debugging
-      Serial.print("Sensor G! ");
       lcd.setCursor(0,1);
       lcd.print("c d e f ");
       lcd.write(1);
@@ -390,8 +364,6 @@ void loop()
   
     if(analogRead(sensorA) < threshold)
     {
-      // For Debugging
-      Serial.print("Sensor A! ");
       lcd.setCursor(0,1);
       lcd.print("c d e f g ");
       lcd.write(1);
@@ -412,8 +384,6 @@ void loop()
   
     if(analogRead(sensorB) < threshold)
     {
-      // For Debugging
-      Serial.print("Sensor B! ");
       lcd.setCursor(0,1);
       lcd.print("c d e f g a ");
       lcd.write(1);
@@ -433,9 +403,7 @@ void loop()
     }
   
     if(analogRead(sensorChigh) < threshold)
-    {
-      // For Debugging
-      Serial.print("Sensor Chigh! ");
+    { 
       lcd.setCursor(0,1);
       lcd.print("c d e f g a b ");
       lcd.write(1);
@@ -571,13 +539,10 @@ void PlayNote(int noteSelector, int sensor)
   }
   else
   {
-    Serial.println("Error playing note! Note selector value must be 1 to 8.");
   }
 
   while(analogRead(sensor) < threshold) // Play the loaded audio until the specified sensor stops registering user input
   {
-    // For Debugging
-    Serial.println(analogRead(sensor));
     
     DacAudio.FillBuffer();
   }
@@ -612,7 +577,6 @@ void PrepareAllNotes_Flute()
 
   lcd.setCursor(0, 0);
   lcd.print("Flute:         ");
-  Serial.print("Flute:");
 }
 // Fill a playable note array at the selected index with the associate .wav bytes
 void PrepareNote_Flute(int noteSelector)
@@ -711,7 +675,6 @@ void PrepareNote_Flute(int noteSelector)
   }
   else
   {
-    Serial.println("Error preparing note! Note selector value must be 1 to 8.");
   }
   
   file.close();
@@ -731,7 +694,6 @@ void PrepareAllNotes_Percussion()
 
   lcd.setCursor(0, 0);
   lcd.print("Percussion:    ");
-  Serial.print("Percussion:");
 }
 // Fill a playable note array at the selected index with the associate .wav bytes
 void PrepareNote_Percussion(int noteSelector)
@@ -830,7 +792,6 @@ void PrepareNote_Percussion(int noteSelector)
   }
   else
   {
-    Serial.println("Error preparing note! Note selector value must be 1 to 8.");
   }
   
   file.close();
@@ -850,7 +811,6 @@ void PrepareAllNotes_Piano()
 
   lcd.setCursor(0, 0);
   lcd.print("Piano:         ");
-  Serial.print("Piano:");
 }
 // Fill a playable note array at the selected index with the associate .wav bytes
 void PrepareNote_Piano(int noteSelector)
@@ -949,7 +909,6 @@ void PrepareNote_Piano(int noteSelector)
   }
   else
   {
-    Serial.println("Error preparing note! Note selector value must be 1 to 8.");
   }
   
   file.close();
@@ -971,7 +930,6 @@ void PrepareAllNotes_Trumpet()
 
   lcd.setCursor(0, 0);
   lcd.print("Trumpet:       ");
-  Serial.print("Trumpet:");
 }
 // Fill a playable note array at the selected index with the associate .wav bytes
 void PrepareNote_Trumpet(int noteSelector)
@@ -1070,7 +1028,6 @@ void PrepareNote_Trumpet(int noteSelector)
   }
   else
   {
-    Serial.println("Error preparing note! Note selector value must be 1 to 8.");
   }
   
   file.close();
@@ -1090,7 +1047,6 @@ void PrepareAllNotes_Violin()
 
   lcd.setCursor(0, 0);
   lcd.print("Violin:        ");
-  Serial.print("Violin:");
 }
 // Fill a playable note array at the selected index with the associate .wav bytes
 void PrepareNote_Violin(int noteSelector)
@@ -1189,7 +1145,6 @@ void PrepareNote_Violin(int noteSelector)
   }
   else
   {
-    Serial.println("Error preparing note! Note selector value must be 1 to 8.");
   }
   
   file.close();
