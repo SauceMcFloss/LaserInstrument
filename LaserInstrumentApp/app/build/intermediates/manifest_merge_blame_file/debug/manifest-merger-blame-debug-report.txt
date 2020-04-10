@@ -1,0 +1,82 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.bdskv2"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="22"
+8-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.BLUETOOTH" />
+11-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:5:5-68
+11-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:5:22-65
+12    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+12-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:6:5-74
+12-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:6:22-71
+13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+13-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:7:5-81
+13-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:7:22-78
+14
+15    <application
+15-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:9:5-36:19
+16        android:allowBackup="true"
+16-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:10:9-35
+17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+17-->[androidx.core:core:1.1.0] C:\Users\erikm\.gradle\caches\transforms-2\files-2.1\e9dab9c67c1ee3668e0bbf86c6d8cbd8\core-1.1.0\AndroidManifest.xml:24:18-86
+18        android:debuggable="true"
+19        android:icon="@drawable/instrument_appicon"
+19-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:11:9-52
+20        android:label="Laser Instrument"
+20-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:12:9-41
+21        android:roundIcon="@mipmap/ic_launcher_round"
+21-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:13:9-54
+22        android:supportsRtl="true"
+22-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:14:9-35
+23        android:testOnly="true"
+24        android:theme="@style/AppTheme" >
+24-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:15:9-40
+25        <activity android:name="com.example.bdskv2.ui.MainActivity" >
+25-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:16:9-22:20
+25-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:16:19-50
+26            <intent-filter>
+26-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:17:13-21:29
+27                <action android:name="android.intent.action.MAIN" />
+27-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:18:17-69
+27-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:18:25-66
+28
+29                <category android:name="android.intent.category.LAUNCHER" />
+29-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:20:17-77
+29-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:20:27-74
+30            </intent-filter>
+31        </activity>
+32        <activity
+32-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:23:9-27:20
+33            android:name="com.example.bdskv2.ui.ConnectionActivity"
+33-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:24:13-50
+34            android:label="Scan For Devices"
+34-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:25:13-45
+35            android:screenOrientation="portrait" >
+35-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:26:13-49
+36        </activity>
+37        <activity
+37-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:28:9-32:20
+38            android:name="com.example.bdskv2.ui.PeripheralControlActivity"
+38-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:29:13-57
+39            android:label="@string/app_name"
+39-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:30:13-45
+40            android:screenOrientation="portrait" >
+40-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:31:13-49
+41        </activity>
+42
+43        <service
+43-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:33:9-35:38
+44            android:name="com.example.bdskv2.bluetooth.BleAdapterService"
+44-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:34:13-56
+45            android:enabled="true" />
+45-->D:\LaserInstrumentApp\app\src\main\AndroidManifest.xml:35:13-35
+46    </application>
+47
+48</manifest>
